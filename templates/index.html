@@ -1,0 +1,706 @@
+{% extends 'base.html' %}
+{% include 'header.html' %}
+
+
+{% block title %}Flask CRUD Application {% endblock %}
+
+
+{% block body %}
+
+
+                                                 <!--    Student Section -->
+<div id="students-section" class="container-fluid">
+  <div class="container">
+    <div class="row">
+     <div class="col md-12">
+    
+      <div class="jumbotron p-3">
+    
+       <h2> <b>Students </b>
+        <button type="button" class="btn btn-success float-right"
+                data-toggle="modal" data-target="#mymodal">Add New Student
+        </button>
+       </h2>
+    
+    
+       {% with messages = get_flashed_messages() %}
+    
+       {% if messages %}
+    
+       {% for message in messages %}
+    
+       <div class="alert alert-success alert-dismissable" role="alert">
+    
+        <button type="button" class="close" data-dismiss="alert" aria-label="close">
+    
+         <span aria-hidden="true">x</span>
+    
+        </button>
+    
+    
+        {{message}}
+    
+    
+       </div>
+    
+    
+       {% endfor %}
+    
+       {% endif %}
+       {% endwith %}
+    
+    
+       <table class="table table-hover table-dark">
+    
+        <tr>
+    
+         <th>ID</th>
+         <th>Name</th>
+         <th>Credits</th>
+         <th>Action</th>
+    
+        </tr>
+    
+    
+        {% for row in students %}
+        <tr>
+         <td>{{row.id}}</td>
+         <td>{{row.name}}</td>
+         <td>{{row.credits}}</td>
+    
+         <td>
+          <a href="/update/{{row.id}}" class="btn btn-warning btn-xs" data-toggle="modal"
+             data-target="#modaledit{{row.id}}">Edit</a>
+          <a href="/delete/{{row.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure You Want To Delete ?')">Delete</a>
+    
+    
+         </td>
+    
+        </tr>
+    
+    
+        <!-- Modal Edit Student-->
+        <div id="modaledit{{row.id}}" class="modal fade" role="dialog">
+         <div class="modal-dialog">
+    
+    
+          <div class="modal-content">
+    
+    
+           <div class="modal-header">
+    
+    
+            <h4 class="modal-title">Update Information</h4>
+    
+    
+           </div>
+    
+    
+           <div class="modal-body">
+    
+    
+            <form action="{{url_for('update')}}" method="POST">
+    
+    
+             <div class="form-group">
+    
+    
+              <label>Name:</label>
+              <input type="hidden" name="id" value="{{row.id}}">
+    
+              <input type="text" class="form-control" name="name" value="{{row.name}}">
+    
+    
+             </div>
+    
+    
+             <div class="form-group">
+    
+    
+              <label>Credits:</label>
+    
+              <input type="text" class="form-control" name="credits" value="{{row.credits}}">
+    
+    
+             </div>
+    
+    
+             <div class="form-group">
+    
+    
+              <button class="btn btn-primary" type="submit">Update</button>
+    
+    
+             </div>
+    
+    
+            </form>
+    
+    
+           </div>
+    
+    
+           <div class="modal-footer">
+    
+    
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    
+    
+           </div>
+    
+    
+          </div>
+    
+    
+         </div>
+    
+        </div>
+    
+        {% endfor %}
+    
+    
+       </table>
+    
+    
+      </div>
+    
+    
+      <!-- Modal Add Student-->
+      <div id="mymodal" class="modal fade" role="dialog">
+       <div class="modal-dialog">
+        <div class="modal-content">
+         <div class="modal-header">
+    
+          <h4 class="modal-title">Add Student</h4>
+         </div>
+         <div class="modal-body">
+    
+          <form action="{{url_for('insert')}}" method="POST">
+    
+    
+           <div class="form-group">
+    
+            <label>Name:</label>
+            <input type="text" class="form-control" name="name" required="1">
+    
+    
+           </div>
+    
+    
+           <div class="form-group">
+    
+    
+            <label>Credits:</label>
+            <input type="text" class="form-control" name="credits" required="1">
+    
+    
+           </div>
+    
+    
+           <div class="form-group">
+    
+    
+            <button class="btn btn-primary" type="submit">Add Student</button>
+    
+    
+           </div>
+    
+    
+          </form>
+    
+    
+         </div>
+    
+    
+         <div class="modal-footer">
+    
+    
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    
+    
+         </div>
+    
+    
+        </div>
+    
+    
+       </div>
+    
+    
+      </div>
+    
+    
+     </div>
+    
+    </div>
+</div>    
+
+
+
+
+
+
+                                                 <!-- Instructor Section -->
+
+<div id="instructor-section" class="container-fluid">
+  <div class="row1">
+    <div class="col md-12">
+   
+     <div class="jumbotron p-3">
+   
+      <h2> <b>Instructors </b>
+       <button type="button" class="btn btn-success float-right"
+               data-toggle="modal" data-target="#mymodal">Add New Instructor
+       </button>
+      </h2>
+   
+   
+      {% with messages = get_flashed_messages() %}
+   
+      {% if messages %}
+   
+      {% for message in messages %}
+   
+      <div class="alert alert-success alert-dismissable" role="alert">
+   
+       <button type="button" class="close" data-dismiss="alert" aria-label="close">
+   
+        <span aria-hidden="true">x</span>
+   
+       </button>
+   
+   
+       {{message}}
+   
+   
+      </div>
+   
+   
+      {% endfor %}
+   
+      {% endif %}
+      {% endwith %}
+   
+   
+      <table class="table table-hover table-dark">
+   
+       <tr>
+   
+        <th>ID</th>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Action</th>
+   
+       </tr>
+   
+   
+       {% for row1 in students %}
+       <tr>
+        <td>{{row1.id}}</td>
+        <td>{{row1.name}}</td>
+        <td>{{row1.department}}</td>
+   
+        <td>
+         <a href="/update1/{{row1.id}}" class="btn btn-warning btn-xs" data-toggle="modal"
+            data-target="#modaledit{{row1.id}}">Edit</a>
+         <a href="/delete1/{{row1.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure You Want To Delete ?')">Delete</a>
+   
+   
+        </td>
+   
+       </tr>
+   
+   
+       <!-- Modal Edit Instructor-->
+       <div id="modaledit{{row1.id}}" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+   
+   
+         <div class="modal-content">
+   
+   
+          <div class="modal-header">
+   
+   
+           <h4 class="modal-title">Update Information</h4>
+   
+   
+          </div>
+   
+   
+          <div class="modal-body">
+   
+   
+           <form action="{{url_for('update1')}}" method="POST">
+   
+   
+            <div class="form-group">
+   
+   
+             <label>Name:</label>
+             <input type="hidden" name="id" value="{{row1.id}}">
+   
+             <input type="text" class="form-control" name="name" value="{{row1.name}}">
+   
+   
+            </div>
+   
+   
+            <div class="form-group">
+   
+   
+             <label>Department:</label>
+   
+             <input type="text" class="form-control" name="department" value="{{row1.department}}">
+   
+   
+            </div>
+   
+   
+            <div class="form-group">
+   
+   
+             <button class="btn btn-primary" type="submit">Update</button>
+   
+   
+            </div>
+   
+   
+           </form>
+   
+   
+          </div>
+   
+   
+          <div class="modal-footer">
+   
+   
+           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+   
+   
+          </div>
+   
+   
+         </div>
+   
+   
+        </div>
+   
+       </div>
+   
+       {% endfor %}
+   
+   
+      </table>
+   
+   
+     </div>
+   
+   
+     <!-- Modal Add Instructor-->
+     <div id="mymodal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+       <div class="modal-content">
+        <div class="modal-header">
+   
+         <h4 class="modal-title">Add Instructor</h4>
+        </div>
+        <div class="modal-body">
+   
+         <form action="{{url_for('insert1')}}" method="POST">
+   
+   
+          <div class="form-group">
+   
+           <label>Name:</label>
+           <input type="text" class="form-control" name="name" required="1">
+   
+   
+          </div>
+   
+   
+          <div class="form-group">
+   
+   
+           <label>Department:</label>
+           <input type="text" class="form-control" name="department" required="1">
+   
+   
+          </div>
+   
+   
+          <div class="form-group">
+   
+   
+           <button class="btn btn-primary" type="submit">Add Instructor</button>
+   
+   
+          </div>
+   
+   
+         </form>
+   
+   
+        </div>
+   
+   
+        <div class="modal-footer">
+   
+   
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+   
+   
+        </div>
+   
+   
+       </div>
+   
+   
+      </div>
+   
+   
+     </div>
+   
+   
+    </div>
+   
+   </div>
+</div>
+ 
+ 
+ 
+
+
+
+
+                                                <!-- Course Section -->
+<div id="course-section" class="container-fluid">
+  <div class="row2">
+    <div class="col md-12">
+   
+     <div class="jumbotron p-3">
+   
+      <h2> <b>Courses </b>
+       <button type="button" class="btn btn-success float-right"
+               data-toggle="modal" data-target="#mymodal">Add New Course
+       </button>
+      </h2>
+   
+   
+      {% with messages = get_flashed_messages() %}
+   
+      {% if messages %}
+   
+      {% for message in messages %}
+   
+      <div class="alert alert-success alert-dismissable" role="alert">
+   
+       <button type="button" class="close" data-dismiss="alert" aria-label="close">
+   
+        <span aria-hidden="true">x</span>
+   
+       </button>
+   
+   
+       {{message}}
+   
+   
+      </div>
+   
+   
+      {% endfor %}
+   
+      {% endif %}
+      {% endwith %}
+   
+   
+      <table class="table table-hover table-dark">
+   
+       <tr>
+   
+        <th>ID</th>
+        <th>Course</th>
+        <th>Instructor</th>
+        <th>Action</th>
+   
+       </tr>
+   
+   
+       {% for row2 in students %}
+       <tr>
+        <td>{{row2.id}}</td>
+        <td>{{row2.course}}</td>
+        <td>{{row2.instructor}}</td>
+   
+        <td>
+         <a href="/update2/{{row2.id}}" class="btn btn-warning btn-xs" data-toggle="modal"
+            data-target="#modaledit{{row2.id}}">Edit</a>
+         <a href="/delete2/{{row2.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure You Want To Delete ?')">Delete</a>
+   
+   
+        </td>
+   
+       </tr>
+   
+   
+       <!-- Modal Edit Course-->
+       <div id="modaledit{{row2.id}}" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+   
+   
+         <div class="modal-content">
+   
+   
+          <div class="modal-header">
+   
+   
+           <h4 class="modal-title">Update Information</h4>
+   
+   
+          </div>
+   
+   
+          <div class="modal-body">
+   
+   
+           <form action="{{url_for('update2')}}" method="POST">
+   
+   
+            <div class="form-group">
+   
+   
+             <label>Course:</label>
+             <input type="hidden" name="id" value="{{row2.id}}">
+   
+             <input type="text" class="form-control" name="course" value="{{row2.course}}">
+   
+   
+            </div>
+   
+   
+            <div class="form-group">
+   
+   
+             <label>Instructor:</label>
+   
+             <input type="text" class="form-control" name="instructor" value="{{row2.instructor}}">
+   
+   
+            </div>
+   
+   
+            <div class="form-group">
+   
+   
+             <button class="btn btn-primary" type="submit">Update</button>
+   
+   
+            </div>
+   
+   
+           </form>
+   
+   
+          </div>
+   
+   
+          <div class="modal-footer">
+   
+   
+           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+   
+   
+          </div>
+   
+   
+         </div>
+   
+   
+        </div>
+   
+       </div>
+   
+       {% endfor %}
+   
+   
+      </table>
+   
+   
+     </div>
+   
+   
+     <!-- Modal Add Course-->
+     <div id="mymodal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+       <div class="modal-content">
+        <div class="modal-header">
+   
+         <h4 class="modal-title">Add Course</h4>
+        </div>
+        <div class="modal-body">
+   
+         <form action="{{url_for('insert2')}}" method="POST">
+   
+   
+          <div class="form-group">
+   
+           <label>Course:</label>
+           <input type="text" class="form-control" name="course" required="1">
+   
+   
+          </div>
+   
+   
+          <div class="form-group">
+   
+   
+           <label>Instructor:</label>
+           <input type="text" class="form-control" name="instructor" required="1">
+   
+   
+          </div>
+   
+   
+          <div class="form-group">
+   
+   
+           <button class="btn btn-primary" type="submit">Add Course</button>
+   
+   
+          </div>
+   
+   
+         </form>
+   
+   
+        </div>
+   
+   
+        <div class="modal-footer">
+   
+   
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+   
+   
+        </div>
+   
+   
+       </div>
+   
+   
+      </div>
+   
+   
+     </div>
+   
+   
+    </div>
+   
+   </div>
+   
+   
+  </div>
+  
+</div>
+
+{% endblock %}
