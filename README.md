@@ -2,6 +2,10 @@
 
 The Enrollment Web App is a project designed to provide a user-friendly platform for managing student enrollment in different courses. It is a web application that hosts three databases for students, courses, and instructors. With the enrollment web app, administrators can easily add, edit and delete data, such as student records, course schedules, and instructor details.
 
+## ER Diagram
+https://lucid.app/lucidchart/046e90d9-e3e4-46c0-99e3-82be7d4f519b/edit?viewport_loc=172%2C-97%2C1428%2C1595%2C0_0&invitationId=inv_d23ff28a-b84b-4cff-b7bb-e3f928bd3d9f
+
+
 # Tools:
 The project is built using a combination of several technologies such as HTML/CSS for the frontend, Python for the backend, and Bootstrap and Flask frameworks for the web application. The database management system used in the project is MySQL-Alchemy, which provides a flexible and reliable way to manage data.
 
